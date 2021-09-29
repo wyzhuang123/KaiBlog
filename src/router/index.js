@@ -30,19 +30,13 @@ const routes = [
           {
             path:"/comment",
             component: () => import('@/components/container/comment/index.vue')
+          },
+          {
+            path:"/login",
+            component: () => import('@/components/user/login.vue')
           }
       ]
     },
-    {
-      path: "/manage",
-      component: () => import('@/ManageMent/index.vue'),
-      children: [
-        {
-          path: "/",
-          component: () => import('@/ManageMent/container/editArticle/index.vue')
-        }
-      ]
-    }
     
 ]
 

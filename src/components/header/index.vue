@@ -2,11 +2,12 @@
   <div class="header-container">
     <div class="MyName">KaiKai</div>
     <!-- 开启router，index对应的便是路由 -->
-    <el-menu class="el-menu-demo"  :default-active="index" >
+    <el-menu class="el-menu-demo"  default-active="/" >
      <el-menu-item index="/" @click="$router.replace('/')">Home</el-menu-item>
      <el-menu-item index="/articles" @click="$router.replace('/articles')">Articles</el-menu-item>
      <el-menu-item index="/comment" @click="$router.replace('/comment')">Comment</el-menu-item>
      <el-menu-item index="/about" @click="$router.replace('/about')">About</el-menu-item>
+     <el-menu-item index="/Login" @click="$router.replace('/login')">Login</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -16,7 +17,7 @@
     name:'HeaderNav',
     data() {
       return {
-        index: this.router.name
+        // index: this.router.name
       }
     },
   }

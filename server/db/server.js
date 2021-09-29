@@ -7,9 +7,8 @@ const Schema = mongoose.Schema;
 const Users = new Schema({
     name: {type: String, required: true},
     password:{type:String, required: true},
-    type: {type: Number, required: true},
     email: {type: String, required: true},
-    avatar: {type: String}
+
 })
 
 const ArticleComments = new Schema({

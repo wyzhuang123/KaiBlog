@@ -4,7 +4,7 @@ const express = require('express')
 
 const router = express.Router();
 // const {saveArticle,FindArticle,AllArticle} = require('../server/db/article/index')
-const {Article,Comment} = require('./db/server')
+const {Article,Comment,User} = require('./db/server')
 
 // Article
 router.post('/saveArticle',function(req,res) {
@@ -60,6 +60,30 @@ router.get('/getArticleContent/:id',function(req, res) {
 
 
 
+// User
+
+router.get('/userLogin',function(req, res) {
+  const {data} = req.query;
+  let user = JSON.parse(data);
+  console.log(user);
+  User.findOne({
+    name: user.name,
+    password: user.password
+  },function(error, result) {
+    let status = 'pending';
+      // if(result) {
+      //     status = 'fullfilled'
+      // } else {
+      //   status = 'failed'
+      // }
+      console.log(result);
+      if(error) {
+        console.log(error);
+      } 
+      res.status(200).send(result);
+  })
+    //成功返回fullfilled，失败返回failed
+})
 
 
 
