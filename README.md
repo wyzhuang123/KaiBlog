@@ -1,19 +1,9 @@
-# kaikai
+### git clone
 
-## Project setup
-```
-npm install
-```
+### npm install 安装依赖
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### mongod --dbpath ...
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### mongo
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### npm run serve
