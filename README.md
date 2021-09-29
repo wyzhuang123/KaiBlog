@@ -1,4 +1,4 @@
-### git clone
+### git clone https://github.com/wyzhuang123/-.git
 
 ### npm install 安装依赖
 
