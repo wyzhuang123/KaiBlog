@@ -45,9 +45,10 @@ import {userLogin} from '@/api/user.js'
     methods: {
       async userLoginBtnClick() {
           const {data} = await userLogin(this.user);
+          console.log(data);
           if(data) {
-            if(!localStorage.getItem('user')) {
-                localStorage.setItem('user',JSON.stringify(this.user));
+                // localStorage.setItem('user',JSON.stringify(this.user));
+                this.$store.commit('setUser',JSON.stringify(data));
                 this.$notify({
                   message: '登录成功！',
                   duration: 1000,
@@ -55,12 +56,6 @@ import {userLogin} from '@/api/user.js'
                   showClose: false
                 });
                 this.$router.replace('/');
-            } else {
-              this.$message({
-                message: '您已登录',
-                type:'warning'
-              });
-            }
           }
         this.user.name = '';
         this.user.password = '';

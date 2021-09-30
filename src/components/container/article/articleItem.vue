@@ -5,7 +5,6 @@
     </div>
     <div class="articleContent">
       <div class="title">{{ article.title}}</div>
-      <div class="somecontent">{{ article.Content}}</div>
       <div class="category">{{ article.Type }}</div>
       <div class="date">{{ article.time }}</div>
     </div>

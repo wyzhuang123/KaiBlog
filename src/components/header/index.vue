@@ -6,18 +6,31 @@
      <el-menu-item index="/" @click="$router.replace('/')">Home</el-menu-item>
      <el-menu-item index="/articles" @click="$router.replace('/articles')">Articles</el-menu-item>
      <el-menu-item index="/comment" @click="$router.replace('/comment')">Comment</el-menu-item>
-     <el-menu-item index="/about" @click="$router.replace('/about')">About</el-menu-item>
-     <el-menu-item index="/Login" @click="$router.replace('/login')">Login</el-menu-item>
+     <el-menu-item index="/about" @click="$router.replace('/about')" >About</el-menu-item>
+     <el-menu-item 
+       v-if="user"
+     >
+       <el-avatar 
+       :size="size" 
+       :src="user.avatar"
+       :fit="fit"
+       >
+       </el-avatar>
+       </el-menu-item>
+     <el-menu-item index="/Login" @click="$router.replace('/login')" v-else>Login</el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
   export default {
     name:'HeaderNav',
     data() {
       return {
-        // index: this.router.name
+        user: JSON.parse(this.$store.state.user),
+        size:35,
+        fit:"cover"
       }
     },
   }
