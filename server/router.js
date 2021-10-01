@@ -76,7 +76,7 @@ router.get('/userLogin',function(req, res) {
       // } else {
       //   status = 'failed'
       // }
-      console.log(result);
+      // console.log(result);
       if(error) {
         console.log(error);
       } 
@@ -90,6 +90,7 @@ router.get('/userLogin',function(req, res) {
 
 router.post('/saveComment',function(req,res) {
   const {data}  = req.query;
+  console.log(data);
   let comment = JSON.parse(data);
   let obj = {
     name: comment.name,
@@ -97,7 +98,6 @@ router.post('/saveComment',function(req,res) {
     time: Date.now()
   }
   new Comment(obj).save()
- 
   res.status(200).send('succeed in saving new Comment')
 
 })
