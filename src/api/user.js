@@ -10,3 +10,25 @@ export const userLogin = data => {
     }
   })
 }
+
+
+export const hasUser = data => {
+  return request({
+    method: 'GET',
+    url:'/hasUser',
+    params: {
+      data
+    }
+  })
+}
+
+
+export const register = data => {
+  return request({
+    method: 'POST',
+    url:'/insertUser',
+    params: {
+      data
+    }
+  })
+}

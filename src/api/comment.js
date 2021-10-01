@@ -11,13 +11,12 @@ export const allComments = () => {
 }
 
 // 评论
-export const saveComment = (Content, name) => {
+export const saveComment = data => {
   return request({
     method: 'POST',
     url: '/saveComment',
     params:{
-      name,
-      Content
+      data
     }
   })
 }

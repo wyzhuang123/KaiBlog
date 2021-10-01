@@ -78,6 +78,9 @@
     width: 100%;
     max-width: 300px;
   }
+  .image:hover{
+    opacity: .9;
+  }
 }
 .article-item-container:hover{
   box-shadow: 

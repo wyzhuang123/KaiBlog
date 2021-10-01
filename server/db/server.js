@@ -8,17 +8,19 @@ const Users = new Schema({
     name: {type: String, required: true},
     password:{type:String, required: true},
     email: {type: String, required: true},
-
+    avatar: {type: String}
 })
 
 const ArticleComments = new Schema({
+  // 评论文章的id
   article_id: {type: String, required: true},
-  content:{type: String, required: true},
-  user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+  //内容
+  Content:{type: String, required: true},
+  // 评论人的id
+  // user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
   user: {
     user_id: {type: mongoose.Schema.Types.ObjectId},
     name: {type: String, required: true},
-    type: {type: Number},
     avatar:{type: String}
   },
   time: {type: String, default:Date.now, required: true}

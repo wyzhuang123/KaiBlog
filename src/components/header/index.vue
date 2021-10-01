@@ -4,11 +4,12 @@
     <!-- 开启router，index对应的便是路由 -->
     <el-menu class="el-menu-demo"  default-active="/" >
      <el-menu-item index="/" @click="$router.replace('/')">Home</el-menu-item>
-     <el-menu-item index="/articles" @click="$router.replace('/articles')">Articles</el-menu-item>
+     <!-- <el-menu-item index="/articles" @click="$router.replace('/articles')">Articles</el-menu-item> -->
      <el-menu-item index="/comment" @click="$router.replace('/comment')">Comment</el-menu-item>
      <el-menu-item index="/about" @click="$router.replace('/about')" >About</el-menu-item>
      <el-menu-item 
        v-if="user"
+       @click="$router.replace('/edituser')"
      >
        <el-avatar 
        :size="size" 

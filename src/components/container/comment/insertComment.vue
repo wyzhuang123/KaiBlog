@@ -8,8 +8,10 @@
         <button class="comment-btn" @click="cleanConrtent">reset</button>
       </div>
      </div>
-     <div v-else>
-      123
+     <div class="register-box" v-else>
+      <div class="register-command">
+        Please Regiter!
+      </div>
      </div>
   </div>
 </template>
@@ -25,8 +27,11 @@ import {saveComment} from '@/api/comment.js'
     },
     methods: {
      async insertComment() {
-           const {data} = await saveComment(this.comment,this.user.name);
-           console.log(data);
+           const {data} = await saveComment({
+             name: this.user.name,
+             Content: this.comment
+           });
+           this.$router.go(0)
       },
       cleanConrtent() {
         this.comment = '';
@@ -107,10 +112,30 @@ import {saveComment} from '@/api/comment.js'
     }
         
   }
-  
+  .register-command{
+    background-color: rgba(159, 158, 158,.6);
+    width: 200px;
+    height: 50px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+    box-shadow: 1px 0 5px gray;
+    transition: 1s;
+  }
+  .register-command:hover{
+    background-color: rgba(159, 158, 158,.8);
+    transition: 1s;
+    box-shadow: 2px 0 15px gray;
+  }
 }
 .btns-box{
   transition: 1s;
   box-sizing: border-box;
+}
+.register-box{
+  display: flex;
+  justify-content: center;
 }
 </style>

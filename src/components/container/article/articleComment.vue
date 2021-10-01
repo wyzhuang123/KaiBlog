@@ -44,10 +44,10 @@
 <style lang="less" scoped>
   .article-comment-container{
     // box-shadow: 1px 0px 1px white;
-    border-top:.1px solid white;
+    // border-top:.1px solid white;
     width: 1300px;
     background-color: pink !important;
-    margin-top: 200px;
+    margin-top: 100px;
     display: flex;
     .first-comment-message{
       width: 200px;
@@ -124,4 +124,7 @@
       }
     }
   }
+        .el-image:hover{
+          opacity: .8;
+      }
 </style>

@@ -23,7 +23,7 @@ import {AllArticles} from '@/api/article.js'
     methods: {
       async  loadAllArticles() {
             const {data} = await AllArticles();
-            console.log(data);
+            // console.log(data);
             this.articles = data;
         }
       },

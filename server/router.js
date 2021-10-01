@@ -70,20 +70,45 @@ router.get('/userLogin',function(req, res) {
     name: user.name,
     password: user.password
   },function(error, result) {
-    let status = 'pending';
-      // if(result) {
-      //     status = 'fullfilled'
-      // } else {
-      //   status = 'failed'
-      // }
-      // console.log(result);
       if(error) {
         console.log(error);
       } 
       res.status(200).send(result);
   })
-    //成功返回fullfilled，失败返回failed
 })
+
+router.get('/hasUser',function(req, res) {
+  const {data} = req.query;
+  let user = JSON.parse(data); //拿到注册页面的名字
+  console.log(user);
+  User.findOne({
+    name: user.name
+  },function(error, result) {
+    if(error) {
+      console.log(error);
+    } else if( !result) {
+      res.status(200).send('0');
+    } else {
+      res.status(200).send('1');
+    }
+  })
+})
+
+
+router.post('/insertUser',function(req, res) {
+  const {data} = req.query;
+  let user = JSON.parse(data);
+  console.log(user);
+  new User(user).save(function(error, result) {
+        if(error) {
+          console.log(error);
+        } else {
+          res.status(200).send(result);
+        }
+  })
+})
+
+
 
 
 
@@ -92,6 +117,7 @@ router.post('/saveComment',function(req,res) {
   const {data}  = req.query;
   console.log(data);
   let comment = JSON.parse(data);
+  // console.log(comment);
   let obj = {
     name: comment.name,
     Content: comment.Content,
@@ -113,6 +139,15 @@ router.get('/AllComments',function(req,res) {
   }
   )
 })
+
+
+// article-comment
+
+router.post('/saveArticleComment',function(req, res){
+
+})
+
+
 
 
 
