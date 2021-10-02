@@ -21,27 +21,28 @@
     </div>
     <!-- 通过user判断 -->
     <div class="input-box">
-      <div class="comment-input" v-if="isInputShow">
-        <el-link :underline="false">LOGIN&PLAY</el-link>
+      <div class="comment-input" v-if="isInputShow" @click="attentionLoginBtnClick">
+        <el-link :underline="false" @click="$router.replace('/login')">COMMENT</el-link>
       </div>
       <div v-else class="comment-box" style="border-radius: 30px">
         <p style="font-size:30px ;margin-bottom:15px; padding: 10px 0;">评论</p>
         <el-input type="textarea" style="background:gray; border-radius: 30px"  v-model="comment"/>
-      </div>
-      <div class="btns-box">
-        <button>reset</button><button>submit</button>
+        <div class="btns-box">
+          <button @click="comment = '' ">reset</button>
+          <button @click="submitCommentBtnClick">submit</button>
+        </div>
       </div>
     </div>
 
     <!-- 评论模块 -->
-    <div class="comment">
-        <article-comment></article-comment>
+    <div class="comment" style="margin-bottom: 40px">
+        <article-comment v-for="comment in articlecomments" :key="comment._id" :comment="comment"></article-comment>
     </div>
   </div>
 </template>
 
 <script>
-import { getArticleContent } from '@/api/article.js'
+import { getArticleContent, addArticleComment, getArticleComment } from '@/api/article.js'
 import 'github-markdown-css'
 import dayjs from 'dayjs'
 import ArticleComment from './articleComment'
@@ -52,13 +53,19 @@ import ArticleComment from './articleComment'
         article: {},
         isInputShow: true,
         user: JSON.parse(this.$store.state.user),
-        comment: ''
+        comment: '',
+        articlecomments:[]
       }
     },
     methods: {
-     async  loadArticle() {
-        const {data} = await getArticleContent(this.articleId);
-        this.article = data;
+      async  loadArticle() {
+          const {data} = await getArticleContent(this.articleId);
+          this.article = data;
+        },
+      async loadArticleComment() {
+          const {data} = await getArticleComment(this.articleId);
+          // console.log(data);
+          this.articlecomments = data;
       },
       loadCommentInput() {
           if(this.user) {
@@ -66,11 +73,44 @@ import ArticleComment from './articleComment'
           } else {
             this.isInputShow = true;
           }
+      },
+      attentionLoginBtnClick() {
+       this.$notify({
+           message: '请先登录',
+           customClass:'attention-box',
+           position: 'bottom-left',
+           duration:2000,
+           showClose: false
+       });
+      },
+      async submitCommentBtnClick() {
+        try {
+          const {data} = await addArticleComment({
+            articleId: this.articleId,
+            comment: this.comment,
+            user_id: this.user._id,
+            name: this.user.name,
+            avatar: this.user.avatar
+          }) 
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+          // console.log(data);
+           this.$notify({
+              message: '评论成功！',
+              customClass: 'attention-box',
+              position: 'bottom-left',
+              duration: 2000,
+              showClose: false
+            });
+          this.$router.go(0);
       }
     },
     created () {
       this.loadArticle();
       this.loadCommentInput();
+      this.loadArticleComment();
     },
     props: {
       articleId: {
@@ -82,61 +122,62 @@ import ArticleComment from './articleComment'
 </script>
 
 <style lang="less" scoped>
+//  /deep/ .attention-box{
+//     background-color: unset !important;
+//   }
   .article-content {
-    // background-color: gray;
     margin-top:20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 1300px;
-    // border: 1px solid red;
-    // box-shadow: 1px -1px 1px rgba(238, 220, 220, 0.3);
-      .articles-content {
-          word-wrap: break-word;
-          overflow: hidden;
-      }
-      .article-image{
-          display: flex;
-          justify-content: center;
-          // width: 950px;
-          .el-image{
-                width: 750px;
-                height: 500px;
-                
-          }
-      }
-      .title{
-        font-size: 30px;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-weight: 700;
-        margin-bottom: 10px;
-      }
-      .message{
-        margin-bottom: 20px;
-        span{
-           margin-right:10px;
+            .articles-content {
+                word-wrap: break-word;
+                overflow: hidden;
+            }
+
+            .article-image{
+                display: flex;
+                justify-content: center;
+                // width: 950px;
+                .el-image{
+                      width: 750px;
+                      height: 500px;
+                }
+            }
+            
+            .title{
+              font-size: 30px;
+              font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+              font-weight: 700;
+              margin-bottom: 10px;
+            }
+            .message{
+              margin-bottom: 20px;
+              span{
+                margin-right:10px;
+              }
+            }
+            .articles-content{
+              margin-top: 20px;
+              text-indent: 32px;
+              line-height: 30px;
+            }
         }
-      }
-      .articles-content{
-        margin-top: 20px;
-        text-indent: 32px;
-        line-height: 30px;
-      }
-  }
- /deep/ .v-show-content{
-    background-color: black !important;
-    pre{
-      background-color: gray;
-    }
-    div{
-      background-color: gray;
-    }
-    span{
-      background-color: gray;
-      color: #292b2c;
-      font-size: 15px;
-    }
-  }
+      /deep/ .v-show-content{
+          background-color: black !important;
+          pre{
+            background-color: gray;
+          }
+          div{
+            background-color: gray;
+          }
+          span{
+            background-color: gray;
+            color: #292b2c;
+            font-size: 15px;
+          }
+        }
   .input-box{
     transition: 1s;
       .comment-input{
@@ -198,5 +239,28 @@ import ArticleComment from './articleComment'
           transition: .5s;
         }
     }
+  }
+</style>
+<style>
+   .attention-box{
+    background-color: white;
+    width: 200px;
+    text-align: center;
+    transition: 1s;
+  }
+  /* .el-message__icon{
+    background-color: white;
+  }
+  .el-message__content{
+    background-color: white;
+  } */
+  .el-notification__group{
+    background-color: white;
+  }
+  .el-notification__content > p{
+    background-color: white;
+    color:black;
+    text-align: center;
+    font-size: 15px;
   }
 </style>

@@ -33,6 +33,10 @@ import ArticleList from './container/article/articleList.vue'
 .container{
   display: flex;
   justify-content: center;
+    /deep/ .el-notification__content > p {
+            color:black;
+            background: white;
+        }
 }
 .footer{
   height: 110px;

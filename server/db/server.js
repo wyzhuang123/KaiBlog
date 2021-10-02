@@ -12,12 +12,9 @@ const Users = new Schema({
 })
 
 const ArticleComments = new Schema({
-  // 评论文章的id
-  article_id: {type: String, required: true},
+  article_id: {type: mongoose.Schema.Types.ObjectId, required: true},
   //内容
   Content:{type: String, required: true},
-  // 评论人的id
-  // user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
   user: {
     user_id: {type: mongoose.Schema.Types.ObjectId},
     name: {type: String, required: true},

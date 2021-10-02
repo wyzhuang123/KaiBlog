@@ -69,11 +69,12 @@ import { debounce } from 'lodash'
                 this.$store.commit('setUser',JSON.stringify(data));
                 this.$notify({
                   message: '登录成功！',
-                  duration: 1000,
-                  position: 'top-left',
-                  showClose: false
+                  duration: 2000,
+                  position: 'bottom-left',
+                  showClose: false,
+                  customClass: 'attention-box'
                 });
-                this.$router.replace("");
+                this.$router.replace('/');
                 this.$router.go(0);
           }
         this.user.name = '';
@@ -208,4 +209,27 @@ import { debounce } from 'lodash'
     }
 
 }
+</style>
+<style>
+   .attention-box{
+    background-color: white;
+    width: 200px;
+    text-align: center;
+    transition: 1s;
+  }
+  /* .el-message__icon{
+    background-color: white;
+  }
+  .el-message__content{
+    background-color: white;
+  } */
+  .el-notification__group{
+    background-color: white;
+  }
+  .el-notification__content > p{
+    background-color: white;
+    color:black;
+    text-align: center;
+    font-size: 15px;
+  }
 </style>

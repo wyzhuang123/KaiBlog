@@ -4,7 +4,7 @@ const express = require('express')
 
 const router = express.Router();
 // const {saveArticle,FindArticle,AllArticle} = require('../server/db/article/index')
-const {Article,Comment,User} = require('./db/server')
+const {Article,Comment,User, ArticleComment} = require('./db/server')
 
 // Article
 router.post('/saveArticle',function(req,res) {
@@ -143,12 +143,55 @@ router.get('/AllComments',function(req,res) {
 
 // article-comment
 
-router.post('/saveArticleComment',function(req, res){
 
+// 添加评论
+router.post('/saveArticleComment',function(req, res){
+      const {data}  = req.query;
+      // console.log(data);
+      let articlecomment = JSON.parse(data);
+      console.log(articlecomment);
+    Article.findOne({
+      _id: articlecomment.articleId
+    },function(error,result) {
+          if(error) {
+            console.log(error);
+          } else {
+             let comment = result.comments;
+             console.log(comment);
+          //    comment.push()
+          new ArticleComment({
+                 article_id: articlecomment.articleId,
+                 Content: articlecomment.comment,
+                user: {
+                  user_id: articlecomment.user_id,
+                  name: articlecomment.name,
+                  avatar: articlecomment.avatar
+                },
+                  time: Date.now()
+              }).save(function(error,result) {
+                  if(error) {
+                    console.log(error);
+                  } else {
+                    console.log('保存进入articleComment表成功！');
+                  }
+              })
+          }
+    })
 })
 
 
+// 所有文章评论
 
+router.get('/getArticleComment/:articleId',function(req, res) {
+  ArticleComment.find({articleId: req.params.articleId}, function(error, result) {
+    if(error) {
+      console.log(error);
+    } else {
+      console.log(123);
+        res.status(200).send(result);
+    }
+})
+})
 
 
 

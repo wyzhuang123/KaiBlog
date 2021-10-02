@@ -9,8 +9,8 @@
       </div>
      </div>
      <div class="register-box" v-else>
-      <div class="register-command">
-        Please Regiter!
+      <div class="register-command" @click="$router.replace('/login')">
+        PLEASE LOGIN!
       </div>
      </div>
   </div>

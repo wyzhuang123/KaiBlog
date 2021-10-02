@@ -17,5 +17,22 @@ export const getArticleContent = articleId => {
   })
 }
 
+//评论文章
+export const addArticleComment = data => {
+  return request({
+      method: 'POST',
+      url: '/saveArticleComment',
+      params:{
+        data
+      }
+  })
+}
 
+// 文章的评论
 
+export const getArticleComment = articleId => {
+  return request({
+      method: 'GET',
+      url: `/getArticleComment/${articleId}`,
+  })
+}
