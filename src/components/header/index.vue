@@ -9,14 +9,16 @@
      <el-menu-item index="/about" @click="$router.replace('/about')" >About</el-menu-item>
      <el-menu-item 
        v-if="user"
-       @click="$router.replace('/edituser')"
+       @click="isLoginOutShow = !isLoginOutShow"
+       class="avatar"
      >
        <el-avatar 
        :size="size" 
        :src="user.avatar"
-       :fit="fit"
+       fit="cover"
        >
        </el-avatar>
+       <div class="loginOut" v-show="isLoginOutShow" @click="LoginOutBtnClick">注销</div>
        </el-menu-item>
      <el-menu-item index="/Login" @click="$router.replace('/login')" v-else>Login</el-menu-item>
     </el-menu>
@@ -30,8 +32,14 @@ import {mapState} from 'vuex'
     data() {
       return {
         user: JSON.parse(this.$store.state.user),
-        size:35,
-        fit:"cover"
+        size:45,
+        isLoginOutShow: false
+      }
+    },
+    methods: {
+      LoginOutBtnClick() {
+            this.$store.commit('deleteUser');
+            this.$router.go(0);
       }
     },
   }
@@ -76,5 +84,27 @@ import {mapState} from 'vuex'
   .MyName:hover{
     box-shadow: 0 1px rgba( 244, 244, 244, .8);
     transition: .5s;
+  }
+  .loginOut{
+    height: 50px;
+    width: 150px;
+    padding-left: 4px;
+    font-size: 20px;
+    color: #7e8085;
+    box-shadow: 2px 2px 10px gray;
+    transition: 0.5s;
+    position: absolute;
+    right: 5px;
+    text-align: center;
+  }
+  .loginOut:hover{
+    color:white;
+    transition: 0.5s;
+  }
+  .loginOut:left{
+      display: inherit;
+  }
+  .avatar{
+    position: relative;
   }
 </style>

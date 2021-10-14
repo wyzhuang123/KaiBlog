@@ -8,7 +8,8 @@ const Users = new Schema({
     name: {type: String, required: true},
     password:{type:String, required: true},
     email: {type: String, required: true},
-    avatar: {type: String}
+    avatar: {type: String},
+    token: {type: String}
 })
 
 const ArticleComments = new Schema({
@@ -20,7 +21,7 @@ const ArticleComments = new Schema({
     name: {type: String, required: true},
     avatar:{type: String}
   },
-  time: {type: String, default:Date.now, required: true}
+  time: {type: String, required: true}
 })
 
 
@@ -30,7 +31,7 @@ const Articles = new Schema({
   time: {type: Date, required: true, default:Date.now},
   Type:{type:String, required:true},
   Image:{type: String, default:"https://img2.baidu.com/it/u=687836742,1839609064&fm=26&fmt=auto"},
-  comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'ArticleComment'}]
+  comments: [{type: Object}]
 })
 
 

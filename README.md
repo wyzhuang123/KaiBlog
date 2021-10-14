@@ -1,4 +1,4 @@
-### git clone https://github.com/wyzhuang123/-.git
+### git clone https://github.com/wyzhuang123/KaiBlog.git
 
     git config --global http.sslVerify "false"
 

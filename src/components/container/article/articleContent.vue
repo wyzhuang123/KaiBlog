@@ -3,7 +3,7 @@
     <div class="title">{{ article.title }}</div>
     <div class="message">
       <span>{{ article.Type }}</span>
-      <span>{{ article.time }}</span>
+      <span>{{ article.time|relativeTime }}</span>
     </div>
     <div class="content">
       <div class="article-image">
@@ -19,6 +19,7 @@
       >
       </mavon-editor>
     </div>
+    
     <!-- 通过user判断 -->
     <div class="input-box">
       <div class="comment-input" v-if="isInputShow" @click="attentionLoginBtnClick">
@@ -36,9 +37,10 @@
 
     <!-- 评论模块 -->
     <div class="comment" style="margin-bottom: 40px">
-        <article-comment v-for="comment in articlecomments" :key="comment._id" :comment="comment"></article-comment>
+        <article-comment v-for="comments in articlecomments" :key="comments._id" :comment="comments"></article-comment>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -61,12 +63,13 @@ import ArticleComment from './articleComment'
       async  loadArticle() {
           const {data} = await getArticleContent(this.articleId);
           this.article = data;
+          this.articlecomments = data.comments
         },
-      async loadArticleComment() {
-          const {data} = await getArticleComment(this.articleId);
-          // console.log(data);
-          this.articlecomments = data;
-      },
+      // async loadArticleComment() {
+      //     const {data} = await getArticleComment(this.articleId);
+      //     // console.log(data);
+      //     this.articlecomments = data;
+      // },
       loadCommentInput() {
           if(this.user) {
             this.isInputShow = false;
@@ -93,24 +96,31 @@ import ArticleComment from './articleComment'
             avatar: this.user.avatar
           }) 
           console.log(data);
-        } catch (error) {
-          console.log(error);
-        }
-          // console.log(data);
-           this.$notify({
+          this.$router.go(0);
+          this.$notify({
               message: '评论成功！',
               customClass: 'attention-box',
               position: 'bottom-left',
               duration: 2000,
               showClose: false
             });
-          this.$router.go(0);
-      }
+        } catch (error) {
+          console.log(error);
+        }
+      },
+        // filterComments() {
+        //   let that = this;
+        //   let newComment = that.comment.filter((item) => {
+        //     return item.articleId = this.articleId;
+        //   })
+        //   this.comment = newComment;
+        // }
     },
     created () {
       this.loadArticle();
       this.loadCommentInput();
-      this.loadArticleComment();
+      // this.loadArticleComment();
+      // this.filterComments();
     },
     props: {
       articleId: {
@@ -118,6 +128,11 @@ import ArticleComment from './articleComment'
         required: true 
       },
     },
+    // filters: {
+    //   newComment: function(item) {
+    //     return item.articleId = this.articleId;
+    //   }
+    // }
   }
 </script>
 
@@ -150,12 +165,13 @@ import ArticleComment from './articleComment'
               font-size: 30px;
               font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
               font-weight: 700;
-              margin-bottom: 10px;
+              margin-bottom: 15px;
             }
             .message{
               margin-bottom: 20px;
               span{
-                margin-right:10px;
+                margin-right:20px;
+                margin-left: 20px;
               }
             }
             .articles-content{

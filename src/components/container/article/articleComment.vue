@@ -6,11 +6,11 @@
       :src="comment.avatar"
       fit="cover"
       ></el-image>
-      <div class="comment-name"> {{ comment.user.name }}</div>
+      <div class="comment-name"> {{ comment.name }}</div>
       </div>
       <div class="comment-content">
-        <div class="first-comment">{{ comment.Content }}</div>
-        <div class="comment-time">{{ time }}</div> 
+        <div class="first-comment">{{ comment.comment }}</div>
+        <div class="comment-time">{{ comment.time|relativeTime }}</div> 
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@ import dayjs from 'dayjs'
   export default {
     data() {
       return {
-        time:dayjs(this.comment.time).format('MMM D, YYYY h:mm A') 
+        // time:dayjs(this.comment.time).format('MMM D, YYYY h:mm A') 
       }
     },
       props: {

@@ -1,7 +1,7 @@
 <template>
   <div class="item-container">
     <div class="message">
-      <span class="name">{{ comment.name }}</span> <span class="time">{{ comment.time }}</span>
+      <span class="name">{{ comment.name }}</span> <span class="time">{{ comment.time|relativeTime }}</span>
     </div>
     <div class="content">{{comment.Content}}</div>
   </div>

@@ -6,7 +6,7 @@
     <div class="articleContent">
       <div class="title">{{ article.title}}</div>
       <div class="category">{{ article.Type }}</div>
-      <div class="date">{{ article.time }}</div>
+      <div class="date">{{ time }}</div>
     </div>
   </div>
   
@@ -17,7 +17,7 @@
  export default {
     data() {
       return {
-        
+          time: dayjs(this.article.time).format('YYYY/MM/DD h:mm  ')
       }
     },
     methods: {

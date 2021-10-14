@@ -32,3 +32,15 @@ export const register = data => {
     }
   })
 }
+
+
+
+export const checkUserLogin = data => {
+  return request({
+    method: 'POST',
+    url: '/checkLogin',
+    params:{
+      data
+    }
+  })
+}

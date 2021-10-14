@@ -64,9 +64,14 @@ import { debounce } from 'lodash'
       async userLoginBtnClick() {
           const {data} = await userLogin(this.user);
           console.log(data);
+          let User = {
+            name: data.name,
+            avatar: data.avatar,
+            token: data.token
+          }
           if(data) {
                 // localStorage.setItem('user',JSON.stringify(this.user));
-                this.$store.commit('setUser',JSON.stringify(data));
+                this.$store.commit('setUser',JSON.stringify(User));
                 this.$notify({
                   message: '登录成功！',
                   duration: 2000,

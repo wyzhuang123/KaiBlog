@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import ElementUI from 'element-ui';
 import mavonEditor from 'mavon-editor'
-import dayjs from 'dayjs'
+import dayjs from '@/utils/dayjs'
 import 'mavon-editor/dist/css/index.css'
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.config.productionTip = false
