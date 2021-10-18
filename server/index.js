@@ -4,8 +4,8 @@ const app = express()
 
 const router = require('./router')
 
+const formidableMiddleware = require('express-formidable');
 
-// const expressPaginate = require('mongoose-opt-paginate')
 
 // 跨域cors
 app.all('*', function(req, res, next) {
@@ -20,9 +20,8 @@ app.all('*', function(req, res, next) {
 });
 
 
-
-app.use(router)
-
+// app.use(formidableMiddleware)
+app.use(router, formidableMiddleware)
 app.listen('3001',() => {
   console.log('running in 3001');
 })

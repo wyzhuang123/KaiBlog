@@ -3,7 +3,10 @@ const { json } = require('express');
 const e = require('express');
 const express = require('express')
 // const jwt  = require('express-jwt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+// const { use } = require('vue/types/umd');
+// const { default: _default } = require('vuex');
+const images = require('images')
 const router = express.Router();
 // const {saveArticle,FindArticle,AllArticle} = require('../server/db/article/index')
 const { Article, Comment, User, ArticleComment } = require('./db/server')
@@ -74,7 +77,7 @@ router.get('/userLogin', function (req, res) {
     password: user.password
   }, function (error, result) {
     if (error) {
-      console.log(error);
+      res.send({status: 0})
     }
     // res.status(200).send(result);
     if (result) {
@@ -101,7 +104,7 @@ router.get('/userLogin', function (req, res) {
 router.post('/checkLogin', function (req, res) {
   const {data} = req.query;
   let user = JSON.parse(data);
-  console.log(user);
+  // console.log(user);
   User.find({ name: user.name, token: user.token }, (error, result) => {
     if (error) {
       console.log(err);
@@ -115,13 +118,49 @@ router.post('/checkLogin', function (req, res) {
           res.send({ status: 0 });   // 时间失效 或者 是伪造的token
         } else {
           res.send({result,status: 1});  
-          console.log(123);
         }
       })
     } else {
       res.send({ status: 0 });
     }
   })
+})
+
+// 换头像
+router.post('/userAvatarChange',function(req, res) {
+  // const {data} = req.query;
+  // let user = JSON.parse(data);
+  const user = req.fields;
+  console.log(user);
+    User.find({name: user.name, token: user.token}, (err, result) => {
+      if(error) {
+        return 
+      }
+
+      if(result) {
+        const fs = require('fs');
+        let D = Date.now();
+        let saveImg = path.join(__dirname, '../public/img/avatar/' + D + '.png');
+        let pathImg = './public/img/avatar/' + D + '.png';//返前台路径目录
+        let base64 = user.avatar.replace(/^data:image\/\w+;base64,/, "");
+        let dataBuffer = new Buffer(base64, 'base64'); //把base64码转成buffer对象，
+        fs.writeFile(saveImg, dataBuffer, function (err) {//用fs写入文件
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('写入成功！', saveImg);
+                User.findByIdAndUpdate({name: user.name}, {avatar: pathImg}, (error, result) => {
+                      if(error) {
+                        return ;
+                      } else {
+                          res.status(200).send('更新成功！');
+                      }
+                })
+            }
+        })
+
+      }
+    })
 })
 router.get('/hasUser', function (req, res) {
   const { data } = req.query;
