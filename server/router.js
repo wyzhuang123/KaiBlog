@@ -26,7 +26,9 @@ router.post('/saveArticle', function (req, res) {
   })
   res.status(200).send('succeed in saving new Articles')
 })
-
+router.get('/students', function(req, res) {
+    res.send('123');
+})
 router.get('/getArticles', function (req, res) {
   let obj = req;
   let data = FindArticle(obj);
@@ -91,6 +93,7 @@ router.get('/userLogin', function (req, res) {
         if (error) {
           console.log(error);
         } else {
+          console.log(result1);
           res.status(200).send(result1);
         }
       })

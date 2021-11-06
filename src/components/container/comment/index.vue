@@ -1,11 +1,14 @@
 <template>
-  <div>
-    <div class="comment-list">
-        <comment-item v-for="item in comments" :key="item._id" :comment="item"></comment-item>
-    </div>
-     <el-divider></el-divider>
-    <insert-comment></insert-comment>
-  </div>
+  <transition name="scale-slide" mode="out-in">
+    <div>
+      <div class="comment-list">
+          <comment-item v-for="item in comments" :key="item._id" :comment="item"></comment-item>
+      </div>
+      <el-divider></el-divider>
+      <insert-comment></insert-comment>
+    </div>    
+  </transition>
+
 </template>
 
 <script>

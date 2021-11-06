@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <transition>
+      <div class="container">
     <div class="login-register-container">
       <div class="login" v-if="isLogin">
           <h3 style="margin-top:25px;font-size: 30px">Login in</h3>
@@ -36,6 +37,8 @@
     </div>
     <!-- <div></div> -->
   </div>
+  </transition>
+
 </template>
 
 <script>
@@ -62,6 +65,7 @@ import { debounce } from 'lodash'
     },
     methods: {
       async userLoginBtnClick() {
+        try {
           const {data} = await userLogin(this.user);
           console.log(data);
           let User = {
@@ -79,28 +83,44 @@ import { debounce } from 'lodash'
                   showClose: false,
                   customClass: 'attention-box'
                 });
-                this.$router.replace('/');
-                this.$router.go(0);
+                // this.$router.replace('/');
+                // this.$router.go(0);
+          } else {
+                this.$notify({
+                  message: '登录失败！',
+                  duration: 2000,
+                  position: 'bottom-left',
+                  showClose: false,
+                  customClass: 'attention-box'
+                });
+                this.user.name = '';
+                // this.user.password = '';          
           }
-        this.user.name = '';
-        this.user.password = '';
+        } catch (error) {
+          console.log(error);
+        }
       },
 
      async  userRegisterBtnClick() {
-        const {data} = await register({
-          name: this.name,
-          password: this.password,
-          email: this.email
-        })
-        // console.log(data);
-        this.$notify({
-                  message: '注册成功，请登录吧！',
-                  duration: 1000,
-                  position: 'top-left',
-                  showClose: false
-                });
-        this.isLogin = true;
-        this.user.name = data.name;
+       try {
+          const {data} = await register({
+            name: this.name,
+            password: this.password,
+            email: this.email
+          })
+          // console.log(data);
+          this.$notify({
+                    message: '注册成功，请登录吧！',
+                    duration: 1000,
+                    position: 'top-left',
+                    showClose: false
+                  });
+          this.isLogin = true;
+          this.user.name = data.name;         
+       } catch (error) {
+          console.log(error);
+       }
+
      },  
     },
     created () {

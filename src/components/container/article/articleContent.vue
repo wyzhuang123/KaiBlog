@@ -1,5 +1,6 @@
 <template>
-  <div class="article-content">
+  <transition name="scale-slide" mode="out-in">
+      <div class="article-content">
     <div class="title">{{ article.title }}</div>
     <div class="message">
       <span>{{ article.Type }}</span>
@@ -40,6 +41,8 @@
         <article-comment v-for="comments in articlecomments" :key="comments._id" :comment="comments"></article-comment>
     </div>
   </div>
+  </transition>
+
   
 </template>
 
@@ -264,12 +267,6 @@ import ArticleComment from './articleComment'
     text-align: center;
     transition: 1s;
   }
-  /* .el-message__icon{
-    background-color: white;
-  }
-  .el-message__content{
-    background-color: white;
-  } */
   .el-notification__group{
     background-color: white;
   }
@@ -279,4 +276,26 @@ import ArticleComment from './articleComment'
     text-align: center;
     font-size: 15px;
   }
+/* .scale-slide-enter-active,
+.scale-slide-leave-active {
+  position: absolute;
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.scale-slide-enter-from {
+  left: -100%;
+}
+
+.scale-slide-enter-to {
+  left: 0%;
+}
+
+.scale-slide-leave-from {
+  transform: scale(0.5);
+}
+
+.scale-slide-leave-to {
+  transform: scale(0.5);
+} */
 </style>

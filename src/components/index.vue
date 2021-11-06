@@ -1,30 +1,15 @@
 <template>
-  <div class="all-container">
-    <header class="header">
-      <header-nav></header-nav>
-    </header>
-    <div class="container">
-      <router-view></router-view>
+  <transition>
+    <div class="all-container">
+      <header class="header">
+        <header-nav></header-nav>
+      </header>
+      <div class="container">
+        <router-view></router-view>
+      </div>
     </div>
-    <!-- <div class="footer">
-    123
-    </div> -->
-  <!-- <el-backtop target=".page-component__scroll .el-scrollbar__wrap" :bottom="100">
-    <div
-      style="{
-        height: 100%;
-        width: 100%;
-        background-color: #f2f5f6;
-        box-shadow: 0 0 6px rgba(0,0,0, .12);
-        text-align: center;
-        line-height: 40px;
-        color: #1989fa;
-      }"
-    >
-      UP
-    </div>
-  </el-backtop> -->
-  </div>
+  </transition>
+
 </template>
 
 <script>
@@ -39,7 +24,7 @@ import {checkUserLogin} from '@/api/user.js'
     },
     methods: {
      async checkUserLogin() {
-       if(this.user) {
+       if(this.user != null) {
          const {data} = await checkUserLogin(this.user);
          console.log(data);
           if(data.status === 0) {  // 等于0的时候表示token过期, 通过commit删除掉localStroge的用户数据
@@ -47,10 +32,19 @@ import {checkUserLogin} from '@/api/user.js'
               this.$router.go(0);
           }
        } 
-      }
+      },
+      // userJSONP() {
+      //     this.$http.jsonp('http://localhost:3001/students', {
+      //       params: {},
+      //       jsonp: 'handleCallback'
+      //     }).then((res) => {  
+      //         console.log(res);
+      //     })
+      //  }
     },
     created () {
           this.checkUserLogin();
+          // this.userJSONP();
     },
     components: {
       HeaderNav,
@@ -61,6 +55,7 @@ import {checkUserLogin} from '@/api/user.js'
 
 <style lang="less" scoped>
 .all-container{
+ 
 }
 .header{
     height: 40px;
